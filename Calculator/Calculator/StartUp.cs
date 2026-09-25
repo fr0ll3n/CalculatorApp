@@ -1,9 +1,30 @@
-﻿namespace Calculator
+﻿using System.Runtime.CompilerServices;
+
+namespace Calculator
 {
     internal class StartUp
     {
+        private static bool CheckCredentials()
+        {
+            Console.Write("Enter password to gain access: ");
+            string password = Console.ReadLine();
+            Console.Clear();
+            return password == Password;
+        }
+        private const string Password = "abcd1234";
         static void Main(string[] args)
         {
+            bool isAuthorised = CheckCredentials();
+            if (!isAuthorised) 
+            {
+                Console.WriteLine("Access denied.");
+                Console.ReadKey(intercept: true);
+                return;
+            }
+            Console.WriteLine("Console Calculatro App");
+            Console.WriteLine(new string(c:'-', count:15));
+            Console.Write("a = ");
+            double a = double.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             while (true)
             {
                 Console.Clear();
@@ -40,6 +61,12 @@
                             break;
                         case "m":
                            OptionsManager.Multiply(a, b);
+                            break;
+                        case "d":
+                            OptionsManager.Divide(a, b);
+                            break;
+                        case "sabs":
+                            OptionsManager.SubtractAbs(a, b);
                             break;
                     }
                 }
